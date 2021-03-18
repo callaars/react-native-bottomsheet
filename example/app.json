@@ -1,0 +1,22 @@
+{
+  "name": "@callaars/react-native-bottomsheet-example",
+  "displayName": "ReactNativeBottomsheet Example",
+  "expo": {
+    "name": "@callaars/react-native-bottomsheet-example",
+    "slug": "callaars-react-native-bottomsheet-example",
+    "description": "Example app for @callaars/react-native-bottomsheet",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
