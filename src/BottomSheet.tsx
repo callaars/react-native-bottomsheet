@@ -34,9 +34,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { ListenerFunction } from './emitter';
 import {
-  addEmitterListener,
+  addBottomSheetListener,
   getCurrentAction,
-  removeEmitterListener,
+  removeBottomSheetListener,
 } from './emitter';
 import useBottomSheets from './useBottomSheets';
 
@@ -131,10 +131,10 @@ export const BottomSheet: React.FC<BottomSheetProps> = (props) => {
       }
     };
 
-    addEmitterListener(listener);
+    addBottomSheetListener(listener);
 
     return () => {
-      removeEmitterListener(listener);
+      removeBottomSheetListener(listener);
     };
   }, [isActive, sheetName]);
 

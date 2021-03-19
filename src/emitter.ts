@@ -9,11 +9,11 @@ let currentAction: { action: Action; name?: string } = {
 // This most likely has only one listener
 const listeners: Set<ListenerFunction> = new Set();
 
-export const addEmitterListener = (listener: ListenerFunction) => {
+export const addBottomSheetListener = (listener: ListenerFunction) => {
   listeners.add(listener);
 };
 
-export const removeEmitterListener = (listener: ListenerFunction) => {
+export const removeBottomSheetListener = (listener: ListenerFunction) => {
   listeners.delete(listener);
 };
 
