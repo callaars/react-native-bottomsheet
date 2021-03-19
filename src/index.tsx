@@ -1,5 +1,4 @@
-export default {
-  multiply(a: number, b: number) {
-    return Promise.resolve(a * b);
-  },
-};
+export * from './BottomSheet';
+export * from './BottomSheetModal';
+export * from './BottomSheetModalProvider';
+export * from './useBottomSheets';

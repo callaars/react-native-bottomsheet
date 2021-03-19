@@ -1,19 +1,67 @@
+import { useCallback } from 'react';
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import ReactNativeBottomsheet from '@callaars/react-native-bottomsheet';
+import { StyleSheet, View, Text, Button } from 'react-native';
+import {
+  BottomSheet,
+  BottomSheetModal,
+  useBottomSheets,
+  BottomSheetModalProvider,
+} from '../../src';
+
+type OnTheFlyProps = { closeBottomSheet: () => void };
+
+const OnTheFly = ({ closeBottomSheet }: OnTheFlyProps) => (
+  <BottomSheetModal name="examply-create">
+    <BottomSheet>
+      <View>
+        <Text>Hello from on-the-fly bottom sheet.</Text>
+      </View>
+      <View>
+        <Button title="Close" onPress={() => closeBottomSheet()} />
+      </View>
+    </BottomSheet>
+  </BottomSheetModal>
+);
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const {
+    openBottomSheet,
+    closeBottomSheet,
+    createBottomSheet,
+  } = useBottomSheets();
 
-  React.useEffect(() => {
-    ReactNativeBottomsheet.multiply(3, 7).then(setResult);
-  }, []);
+  const onPressOnTheFly = useCallback(() => {
+    createBottomSheet({
+      sheetName: 'examply-create',
+      instantOpen: true,
+      component: OnTheFly({ closeBottomSheet }),
+    });
+  }, [closeBottomSheet, createBottomSheet]);
 
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <BottomSheetModalProvider>
+      <View style={styles.container}>
+        <Text>Hello from app.</Text>
+        <Button
+          title="Open bottom instantiated sheet"
+          onPress={() => {
+            openBottomSheet('example');
+          }}
+        />
+        <Button title="Create on-the-fly sheet" onPress={onPressOnTheFly} />
+      </View>
+      <BottomSheetModal name="example">
+        <BottomSheet>
+          <View>
+            <Text>Hello from bottom sheet.</Text>
+          </View>
+          <View>
+            <Button title="Close" onPress={() => closeBottomSheet()} />
+          </View>
+        </BottomSheet>
+      </BottomSheetModal>
+    </BottomSheetModalProvider>
   );
 }
 

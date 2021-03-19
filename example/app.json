@@ -1,6 +1,6 @@
 {
   "name": "@callaars/react-native-bottomsheet-example",
-  "displayName": "ReactNativeBottomsheet Example",
+  "displayName": "Bottomsheet Example",
   "expo": {
     "name": "@callaars/react-native-bottomsheet-example",
     "slug": "callaars-react-native-bottomsheet-example",
