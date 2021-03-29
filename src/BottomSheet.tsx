@@ -168,7 +168,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = (props) => {
     [visible]
   );
 
-  return (
+  return visible ? (
     <View style={[styles.border, currentDisplayStyle]} onLayout={onLayout}>
       <TouchableWithoutFeedback onPress={() => closeBottomSheet()}>
         <Animated.View
@@ -180,7 +180,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = (props) => {
         {children}
       </Animated.View>
     </View>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({
