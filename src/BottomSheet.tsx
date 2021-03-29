@@ -6,6 +6,7 @@ import React, {
   useState,
 } from 'react';
 import {
+  Dimensions,
   LayoutChangeEvent,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -75,16 +76,26 @@ const runTiming = (clock: Clock, toValue: Animated.Value<number>) => {
   ]);
 };
 
+const { height: deviceHeight } = Dimensions.get('window');
+
 export const BottomSheet: React.FC<BottomSheetProps> = (props) => {
   const { closeBottomSheet } = useBottomSheets();
   const { children, sheetName } = props;
 
   const clock = useRef<Clock>(new Clock());
 
+  let height = useRef<number>(deviceHeight);
+
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
+    height.current = event.nativeEvent.layout.height;
+  }, []);
+
   const progress = useValue(0);
   const isActive = useValue<0 | 1>(0);
   const previousActive = useValue<0 | 1>(0);
   const [visible, setVisible] = useState<boolean>();
+  const bottom = useValue(-height.current);
+  const opacity = useValue(0);
 
   useCode(() => set(isActive, visible ? 1 : 0), [visible]);
   useCode(
@@ -93,6 +104,20 @@ export const BottomSheet: React.FC<BottomSheetProps> = (props) => {
         cond(not(clockRunning(clock.current)), startClock(clock.current)),
       ]),
       set(progress, runTiming(clock.current, isActive)),
+      set(
+        opacity,
+        interpolate(progress, {
+          inputRange: [0, 1],
+          outputRange: [0, 0.5],
+        })
+      ),
+      set(
+        bottom,
+        interpolate(progress, {
+          inputRange: [0, 1],
+          outputRange: [-height.current, 0],
+        })
+      ),
       set(previousActive, isActive),
       cond(and(not(clockRunning(clock.current)), eq(isActive, 0)), [
         call([], () => setVisible(false)),
@@ -138,22 +163,6 @@ export const BottomSheet: React.FC<BottomSheetProps> = (props) => {
     };
   }, [isActive, sheetName]);
 
-  let height = useRef<number>(0);
-
-  const onLayout = useCallback((event: LayoutChangeEvent) => {
-    height.current = event.nativeEvent.layout.height;
-  }, []);
-
-  const opacity = interpolate(progress, {
-    inputRange: [0, 1],
-    outputRange: [0, 0.5],
-  });
-
-  const bottom = interpolate(progress, {
-    inputRange: [0, 1],
-    outputRange: [-height.current, 0],
-  });
-
   const currentDisplayStyle: ViewStyle = useMemo(
     () => ({ display: visible ? 'flex' : 'none' }),
     [visible]
@@ -178,6 +187,7 @@ const styles = StyleSheet.create({
   border: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 100,
+    elevation: 100,
   },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
@@ -194,7 +204,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     height: 300,
     width: '100%',
-    bottom: 0,
+    bottom: -deviceHeight,
     left: 0,
     zIndex: 2,
     elevation: 2,
