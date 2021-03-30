@@ -53,7 +53,7 @@ export default function App() {
       </View>
       <BottomSheetModal name="example">
         <BottomSheet>
-          <View>
+          <View style={styles.bottomSheet}>
             <Text>Hello from bottom sheet.</Text>
           </View>
           <View>
@@ -75,5 +75,8 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     marginVertical: 20,
+  },
+  bottomSheet: {
+    height: 200,
   },
 });
