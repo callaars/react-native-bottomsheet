@@ -11,9 +11,9 @@ import {
 
 type OnTheFlyProps = { closeBottomSheet: () => void };
 
-const OnTheFly = ({ closeBottomSheet }: OnTheFlyProps) => (
+const onTheFly = ({ closeBottomSheet }: OnTheFlyProps) => (
   <BottomSheetModal name="examply-create">
-    <BottomSheet>
+    <BottomSheet style={styles.onTheFlySheet}>
       <View>
         <Text>Hello from on-the-fly bottom sheet.</Text>
       </View>
@@ -35,7 +35,7 @@ export default function App() {
     createBottomSheet({
       sheetName: 'examply-create',
       instantOpen: true,
-      component: OnTheFly({ closeBottomSheet }),
+      component: onTheFly({ closeBottomSheet }),
     });
   }, [closeBottomSheet, createBottomSheet]);
 
@@ -52,7 +52,7 @@ export default function App() {
         <Button title="Create on-the-fly sheet" onPress={onPressOnTheFly} />
       </View>
       <BottomSheetModal name="example">
-        <BottomSheet>
+        <BottomSheet style={styles.firstSheet}>
           <View style={styles.bottomSheet}>
             <Text>Hello from bottom sheet.</Text>
           </View>
@@ -78,5 +78,11 @@ const styles = StyleSheet.create({
   },
   bottomSheet: {
     height: 200,
+  },
+  firstSheet: {
+    backgroundColor: 'white',
+  },
+  onTheFlySheet: {
+    backgroundColor: 'orange',
   },
 });

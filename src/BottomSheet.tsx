@@ -41,10 +41,6 @@ import {
 } from './emitter';
 import useBottomSheets from './useBottomSheets';
 
-type BottomSheetProps = {
-  sheetName?: string;
-};
-
 const runTiming = (clock: Clock, toValue: Animated.Value<number>) => {
   const state = {
     finished: new Value(0),
@@ -78,9 +74,14 @@ const runTiming = (clock: Clock, toValue: Animated.Value<number>) => {
 
 const { height: deviceHeight } = Dimensions.get('window');
 
+type BottomSheetProps = {
+  sheetName?: string;
+  style?: ViewStyle;
+};
+
 export const BottomSheet: React.FC<BottomSheetProps> = (props) => {
   const { closeBottomSheet } = useBottomSheets();
-  const { children, sheetName } = props;
+  const { children, sheetName, style } = props;
 
   const clock = useRef<Clock>(new Clock());
 
@@ -176,7 +177,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = (props) => {
           collapsable={false}
         />
       </TouchableWithoutFeedback>
-      <Animated.View style={[styles.container, { bottom }]}>
+      <Animated.View style={[styles.container, style, { bottom }]}>
         {children}
       </Animated.View>
     </View>
@@ -198,7 +199,6 @@ const styles = StyleSheet.create({
   },
   container: {
     position: 'absolute',
-    backgroundColor: 'white',
     padding: 20,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
