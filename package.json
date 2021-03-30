@@ -1,6 +1,6 @@
 {
   "name": "@callaars/react-native-bottomsheet",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Fully animated 60fps bottom sheet that handles gestures perfectly.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
